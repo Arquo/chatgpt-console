@@ -5,7 +5,7 @@ interface ButtonProps {
   onClick: (input: string) => void;
 }
 const InputButtonComponent: React.FC<ButtonProps> = ({ onClick }) => {
-    // onClick function is taken from the page 
+    // onClick function is taken from the page
   const [userInput, setUserInput] = useState("");
 
   const handleButtonClick = () => {
@@ -14,12 +14,12 @@ const InputButtonComponent: React.FC<ButtonProps> = ({ onClick }) => {
   };
   return (
     <div className="flex flex-col items-center space-y-4">
-      <input 
-        type="text" 
-        value={userInput} 
-        onChange={(e) => setUserInput(e.target.value)}  
+      <input
+        type="text"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
         className="w-full bg-white p-2 rounded-md"
-        placeholder="Type your question here..." 
+        placeholder="Type your question here..."
       />
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
