@@ -7,38 +7,45 @@ import { OPENAI_API_KEY } from './config';
 export default function Home() {
   const [displayedInput, setDisplayedInput] = useState<string>('');
   const [displayedOuput, setDisplayedOutput] = useState<string>('');
+  const [chatHistory, setChatHistory] = useState<{ user: string, bob: string }[]>([]);
+  const [isBobTyping, setIsBobTyping] = useState<boolean>(false); // State variable to track Bob's typing status
 
+
+//Pretend you are a stupid boy Bob, answer: ?
   const handleUserInput = async (input: string) => {
 
     setDisplayedInput(input);
+    setIsBobTyping(true); // Set Bob's typing status to true while generating a response
+
     const openai = new OpenAI({apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser:true});
     const completion = await openai.chat.completions.create({
       messages: [{ role: 'system', content: "Pretend you are a stupid boy Bob, answer: ? "+ input }],
       model: 'gpt-3.5-turbo',
     });
-
-    console.log(completion.choices[0].message.content);
-    setDisplayedOutput(completion.choices[0].message.content || ''); //if null assign ''
+    const response = completion.choices[0].message.content
+    setDisplayedOutput(response || ''); //if null assign ''
+    setChatHistory(prevHistory => [...prevHistory, { user: input, bob: response }]);
+    setIsBobTyping(false);
   };
 
-  return (
-    <main className="flex justify-center items-center">
-      <div className="bg-blue-200 p-12 text-center w-96">
-        <h2 className="text-3xl font-bold mb-6">Ask Bob</h2>
-        <div className="mb-4">
-        <InputButtonComponent onClick={handleUserInput} />
+return (
+  <main className="flex justify-center items-center">
+    <div className="bg-blue-200 p-12 text-left w-96">
+      <h2 className="text-3xl font-bold mb-6">Ask Bob</h2>
+      {/* Display chat history */}
+      {chatHistory.map((message, index) => (
+        <div key={index} className="mb-4">
+          <p>User: {message.user}</p>
+          <p>Bob: {message.bob}</p>
         </div>
-      {displayedInput && (
-        <>
-        <p className="mb-4"> User: {displayedInput}</p>
-        <p className="mb-4"> Bob: {displayedOuput}</p>
-        </>
-    )}
-
-
+      ))}
+      {/* Display typing indicator when Bob is typing */}
+      {isBobTyping && <p className="text-gray-500">Bob is typing...</p>}
+      <div className="mb-4">
+        <InputButtonComponent onClick={handleUserInput} />
+      </div>
+    </div>
+  </main>
+);
     {/* handleUserInput(string -> setDisplayedInput(string)) is passed into onClick of InputButtonComponent */}
-
-  </div>
-</main>
-  );
 }

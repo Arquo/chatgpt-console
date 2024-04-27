@@ -13,7 +13,7 @@ const InputButtonComponent: React.FC<ButtonProps> = ({ onClick }) => {
     // userInput -> setDisplayedInput(userInput)
   };
   return (
-    <div className="flex flex-col items-center space-y-4">
+    <div className="flex items-center space-x-4">
       <input
         type="text"
         value={userInput}
