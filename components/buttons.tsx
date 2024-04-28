@@ -11,6 +11,7 @@ const InputButtonComponent: React.FC<ButtonProps> = ({ onClick }) => {
   const handleButtonClick = () => {
     onClick(userInput);
     // userInput -> setDisplayedInput(userInput)
+    setUserInput("")
   };
   return (
     <div className="flex items-center space-x-4">
