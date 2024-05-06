@@ -24,7 +24,7 @@ export default function Home() {
     setDisplayedInput(input);
     setIsBobTyping(true); // Set Bob's typing status to true while generating a response
 
-    const openai = new OpenAI({apiKey: OPENAI_API_KEY});
+    const openai = new OpenAI({apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: true });
     const completion = await openai.chat.completions.create({
       messages: [{ role: 'system', content: "Pretend you are a stupid boy Bob, answer: "+ input }],
       model: 'gpt-3.5-turbo',
