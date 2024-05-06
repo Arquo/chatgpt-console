@@ -5,6 +5,11 @@ import OpenAI from 'openai';
 import { OPENAI_API_KEY } from './config';
 import Bob from './laugh.png'
 import User from './huhcaattt.gif'
+import { RedirectType, redirect } from 'next/navigation'
+
+function routeToAbout(data: FormData) {
+  redirect(`/about?text=${data.get('text')}&number=${data.get('number')}`);
+}
 
 export default function Home() {
   const [displayedInput, setDisplayedInput] = useState<string>('');
@@ -19,9 +24,9 @@ export default function Home() {
     setDisplayedInput(input);
     setIsBobTyping(true); // Set Bob's typing status to true while generating a response
 
-    const openai = new OpenAI({apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser:true});
+    const openai = new OpenAI({apiKey: OPENAI_API_KEY});
     const completion = await openai.chat.completions.create({
-      messages: [{ role: 'system', content: "Pretend you are a stupid boy Bob, answer: ? "+ input }],
+      messages: [{ role: 'system', content: "Pretend you are a stupid boy Bob, answer: "+ input }],
       model: 'gpt-3.5-turbo',
     });
     const response = completion.choices[0].message.content
@@ -32,6 +37,16 @@ export default function Home() {
 
 return (
   <main className="flex justify-center items-center">
+    <div className="bg-green-200" >
+    <form action={routeToAbout}>
+      <h1>routing Testing</h1>
+      <button type='submit'>submit</button>
+      <br></br>
+      <input type="text" defaultValue="abc" name='text'/>
+      <input type="number" defaultValue="123" name='number'/>
+    </form>
+    </div>
+
     <div className="bg-blue-200 p-12 text-left w-2/5">
       <h2 className="text-3xl font-bold mb-6">Ask Bob</h2>
       {/* Display chat history */}
