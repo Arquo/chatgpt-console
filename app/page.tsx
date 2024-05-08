@@ -37,7 +37,7 @@ export default function Home() {
 
 return (
   <main className="flex justify-center items-center">
-    <div className="bg-green-200" >
+    {/* <div className="bg-green-200" >
     <form action={routeToAbout}>
       <h1>routing Testing</h1>
       <button type='submit'>submit</button>
@@ -45,7 +45,7 @@ return (
       <input type="text" defaultValue="abc" name='text'/>
       <input type="number" defaultValue="123" name='number'/>
     </form>
-    </div>
+    </div> */}
 
     <div className="bg-blue-200 p-12 text-left w-2/5">
       <h2 className="text-3xl font-bold mb-6">Ask Bob</h2>
